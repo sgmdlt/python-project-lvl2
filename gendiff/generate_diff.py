@@ -1,4 +1,5 @@
 from itertools import chain
+from operator import itemgetter
 import json
 
 
@@ -26,7 +27,18 @@ def get_diff(old, new):
     return diff
 
 
-def format_(diff, old, new, indents=2):
+def _sort(diff):
+    order = {
+    'removed': 1,
+    'added': 2,
+    'kept': 3,
+    }
+    diff = sorted(diff, key=lambda pair: order.get(pair[1]))
+    diff = sorted(diff, key=lambda pair: pair[0])
+    return diff
+
+
+def format_(diff, old, new, indents=2, sort=_sort):
     result = []
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
@@ -36,7 +48,7 @@ def format_(diff, old, new, indents=2):
     }
     ind = ' ' * indents
 
-    for key, state in sorted(diff, key = lambda x: x[0]):
+    for key, state in sort(diff):
         sign = signs.get(state)
         if state == 'removed':
             value = old.get(key)
