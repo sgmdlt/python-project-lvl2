@@ -1,10 +1,11 @@
 from itertools import chain
-from operator import itemgetter
 import json
 
 
-def parse_files(first_file, second_file):
-    return json.load(open(first_file)), json.load(open(second_file))
+def parse_files(path_to_first_file, path_to_second_file):
+    first = json.load(open(path_to_first_file)) 
+    second = json.load(open(path_to_second_file))
+    return (first, second)
 
 
 def get_diff(old, new):
@@ -27,7 +28,7 @@ def get_diff(old, new):
     return diff
 
 
-def _sort(diff):
+def sort_(diff):
     order = {
     'removed': 1,
     'added': 2,
@@ -38,7 +39,7 @@ def _sort(diff):
     return diff
 
 
-def format_(diff, old, new, indents=2, sort=_sort):
+def format_(diff, old, new, indents=2, order=sort_):
     result = []
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
@@ -48,7 +49,7 @@ def format_(diff, old, new, indents=2, sort=_sort):
     }
     ind = ' ' * indents
 
-    for key, state in sort(diff):
+    for key, state in order(diff):
         sign = signs.get(state)
         if state == 'removed':
             value = old.get(key)
@@ -64,5 +65,4 @@ def format_(diff, old, new, indents=2, sort=_sort):
 
 def generate_diff(first_file, second_file):
     first, second = parse_files(first_file, second_file)
-    diff = get_diff(first, second)
-    return format(diff, first, second)
+    return format_(get_diff(first, second), first, second)
