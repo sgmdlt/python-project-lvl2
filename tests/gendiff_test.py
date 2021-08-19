@@ -20,4 +20,4 @@ def files():
 
 def test_diff_keys(files):
     first, second = files
-    assert format_(get_diff(first, second), first, second) == RESULT
+    assert format_(get_diff(first, second)) == RESULT

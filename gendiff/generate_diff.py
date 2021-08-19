@@ -9,23 +9,23 @@ def parse_files(path_to_first_file, path_to_second_file):
 
 
 def get_diff(old, new):
-    diff = set()
+    diff = {}
     removed = old.keys() - new.keys()
     added = new.keys() - old.keys()
     kept = new.keys() & old.keys()
     
     for key in kept:
         if old.get(key) != new.get(key):
-            diff.add((key, 'removed'))
-            diff.add((key, 'added'))
+            diff[(key, 'removed')] = old.get(key)
+            diff[(key, 'added')] = new.get(key)
         else:
-            diff.add((key, 'kept'))
+            diff[(key, 'kept')] = old.get(key)
     for key in removed:
-        diff.add((key, 'removed'))
+        diff[(key, 'removed')] = old.get(key)
     for key in added:
-        diff.add((key, 'added'))
+        diff[(key, 'added')] = new.get(key)
     
-    return diff
+    return diff  # { (key, state): value }
 
 
 def sort_(diff):
@@ -39,7 +39,7 @@ def sort_(diff):
     return diff
 
 
-def format_(diff, old, new, indents=2, order=sort_):
+def format_(diff, indents=2, order=sort_):
     result = []
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
@@ -51,12 +51,7 @@ def format_(diff, old, new, indents=2, order=sort_):
 
     for key, state in order(diff):
         sign = signs.get(state)
-        if state == 'removed':
-            value = old.get(key)
-        elif state == 'added':
-            value = new.get(key)
-        elif state == 'kept':
-            value = new.get(key)
+        value = diff.get((key, state))
         result.append(view(ind=ind, sign=sign, key=key, value=value))
     result = chain('{', result, '}')
     
@@ -65,4 +60,4 @@ def format_(diff, old, new, indents=2, order=sort_):
 
 def generate_diff(first_file, second_file):
     first, second = parse_files(first_file, second_file)
-    return format_(get_diff(first, second), first, second)
+    return format_(get_diff(first, second))
