@@ -39,6 +39,12 @@ def sort_(diff):
     return diff
 
 
+def jsonify(value):
+    if not isinstance(value, str):
+        value = json.JSONEncoder().encode(value)
+    return value
+
+
 def format_(diff, indents=2, order=sort_):
     result = []
     view = '{ind}{sign} {key}: {value}'.format
@@ -51,7 +57,7 @@ def format_(diff, indents=2, order=sort_):
 
     for key, state in order(diff):
         sign = signs.get(state)
-        value = diff.get((key, state))
+        value = jsonify(diff.get((key, state)))
         result.append(view(ind=ind, sign=sign, key=key, value=value))
     result = chain('{', result, '}')
     

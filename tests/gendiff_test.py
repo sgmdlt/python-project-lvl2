@@ -4,18 +4,20 @@ from gendiff.generate_diff import format_, get_diff
 
 
 RESULT = '''{
-  - follow: False
+  - follow: false
     host: hexlet.io
   - proxy: 123.234.53.22
   - timeout: 50
   + timeout: 20
-  + verbose: True
+  + verbose: true
 }'''
+
+PATH = 'tests/fixtures/'
 
 @pytest.fixture
 def files():
-    file1 = json.load(open('tests/fixtures/file1.json'))
-    file2 = json.load(open('tests/fixtures/file2.json'))
+    file1 = json.load(open(PATH + 'file1.json'))
+    file2 = json.load(open(PATH + 'file2.json'))
     return (file1, file2)
 
 def test_diff_keys(files):
