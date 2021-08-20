@@ -1,6 +1,8 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/sgmdlt/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/sgmdlt/python-project-lvl2/actions)
+[![Python CI](https://github.com/sgmdlt/python-project-lvl2/actions/workflows/python_ci.yml/badge.svg?event=push)](https://github.com/sgmdlt/python-project-lvl2/actions/workflows/python_ci.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/af8221f6a553ed177b75/maintainability)](https://codeclimate.com/github/sgmdlt/python-project-lvl2/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/af8221f6a553ed177b75/test_coverage)](https://codeclimate.com/github/sgmdlt/python-project-lvl2/test_coverage)
 
 ## Gendiff
 
