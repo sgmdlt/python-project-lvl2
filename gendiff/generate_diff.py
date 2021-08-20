@@ -4,7 +4,7 @@ from itertools import chain
 from gendiff.parsers import parse_files
 
 
-def get_diff(old, new):  # noqa:WPS210, WPS440
+def get_diff(old, new):
     diff = {}
     removed = old.keys() - new.keys()
     added = new.keys() - old.keys()
@@ -41,7 +41,7 @@ def jsonify(value):
     return value
 
 
-def format_(diff, indents=2, order=_sort):  # noqa: WPS210
+def format_(diff, indents=2, order=_sort):
     result = []
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
