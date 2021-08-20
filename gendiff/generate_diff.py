@@ -1,13 +1,7 @@
 import json
 from itertools import chain
 
-
-def parse_files(path_to_first_file, path_to_second_file):
-    with open(path_to_first_file) as first:
-        first = json.load(first)
-        with open(path_to_second_file) as second:
-            second = json.load(second)
-            return (first, second)
+from gendiff.parsers import parse_files
 
 
 def get_diff(old, new):  # noqa:WPS210, WPS440
