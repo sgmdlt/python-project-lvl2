@@ -1,9 +1,10 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/sgmdlt/python-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/sgmdlt/python-project-lvl2/actions)
+[![Maintainability](https://api.codeclimate.com/v1/badges/af8221f6a553ed177b75/maintainability)](https://codeclimate.com/github/sgmdlt/python-project-lvl2/maintainability)
 
-# Gendiff
+## Gendiff
 
-## a simple utility for comparing two files
+### a simple utility for comparing two files
 
 As you can see, it's pretty straightforward
 
