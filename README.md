@@ -8,6 +8,12 @@
 
 ### a simple utility for comparing two files
 
+
 As you can see, it's pretty straightforward
 
 [![asciicast](https://asciinema.org/a/6PxthfHSbvWfjUpNu8DbVB2sS.svg)](https://asciinema.org/a/6PxthfHSbvWfjUpNu8DbVB2sS)
+
+---
+YAML files as well
+
+[![asciicast](https://asciinema.org/a/0ERCriSgbfXuBD0AQwEp4xoj5.svg)](https://asciinema.org/a/0ERCriSgbfXuBD0AQwEp4xoj5)
