@@ -723,7 +723,7 @@ typing_extensions = ">=3.6,<4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "e595020a8ee05454e69fc972185e14e38c014cbe6181f50fb503a39d0b6edc5c"
+content-hash = "1d77e5109876df9fdcaff73922f44d1afc4ad647599a79386c0d78a9f7049afd"
 
 [metadata.files]
 appnope = [
