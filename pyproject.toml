@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hexlet-code"
-version = "0.2.0"
+version = "0.3"
 description = "CLI and library diff utilite"
 authors = ["Your Name <you@example.com>"]
 packages = [
@@ -10,6 +10,7 @@ packages = [
 python = "^3.8"
 pytest = "^6.2.4"
 wemake-python-styleguide = "^0.15.3"
+PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 ipython = "^7.26.0"
