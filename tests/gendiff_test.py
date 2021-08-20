@@ -1,6 +1,5 @@
 import pytest
-import json
-from gendiff.generate_diff import format_, get_diff
+from gendiff.generate_diff import generate_diff
 
 
 RESULT = '''{
@@ -16,10 +15,11 @@ PATH = 'tests/fixtures/'
 
 @pytest.fixture
 def files():
-    file1 = json.load(open(PATH + 'file1.json'))
-    file2 = json.load(open(PATH + 'file2.json'))
-    return (file1, file2)
+    file1 = PATH + 'file1.json'
+    file2 = PATH + 'file2.json'
+    yield (file1, file2)
 
-def test_diff_keys(files):
+
+def test_generate_diff(files):
     first, second = files
-    assert format_(get_diff(first, second)) == RESULT
+    assert generate_diff(first, second) == RESULT
