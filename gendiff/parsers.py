@@ -4,8 +4,7 @@ import yaml
 
 PARSERS = (
     ('.json', lambda file: json.load(open(file))),
-    ('.yaml', lambda file: yaml.safe_load(open(file))),
-    ('.yml', lambda file: yaml.safe_load(open(file))),
+    (('.yaml','yml'), lambda file: yaml.safe_load(open(file))),
 )
 
 
