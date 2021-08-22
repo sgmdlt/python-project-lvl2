@@ -1,6 +1,7 @@
 import pytest
 from gendiff.generate_diff import generate_diff
 
+
 RESULT = '''{
   - follow: false
     host: hexlet.io
@@ -27,9 +28,9 @@ def yamls():
 
 
 @pytest.fixture
-def wrongs():
-    file1 = PATH + 'file1.jpeg'
-    file2 = PATH + 'file2.txt'
+def jsons_nested():
+    file1 = PATH + '/nested/file1.json'
+    file2 = PATH + '/nested/file2.json'
     yield (file1, file2)
 
 
@@ -43,6 +44,7 @@ def test_diff_yamls(yamls):
     assert generate_diff(first, second) == RESULT
 
 
-#def test_wrong_file_format(wrongs):
-#    first, second = wrongs
-#    assert generate_diff(first, second) == 'wrong'
+def test_nested_json(jsons_nested):
+    first, second = jsons_nested
+    print(generate_diff(first, second))
+    assert generate_diff(first, second) == expected

@@ -18,23 +18,36 @@ def sort_(diff):
     return sorted_diff
 
 
-def jsonify(elem, depth):
+def jsonify(value):
+    if value is None:
+        return 'none'
+    elif value is True:
+        return 'true'
+    elif value is False:
+        return 'false'
+    return str(value)
+
+
+def format_value(elem, deep_indent_size, deep_indent):
     if not isinstance(elem, dict):
-        return json.JSONEncoder().encode(elem)
+        return jsonify(elem)
     acc = []
-    deep_ind = ' ' * depth
-    view = '{ind} {key}: {value}'.format
+    print('deep_ind_size = ', deep_indent_size)
+    current_indent = deep_indent
+    deep_indent_size += 4
+    deep_indent = deep_indent_size * ' '
+    view = '{ind}  {key}: {value}'.format
     for key, value in elem.items():
         acc.append(view(
-            ind=' ' * depth,
+            ind=deep_indent,
             key=key,
-            value=jsonify(value, depth=depth + 2)
+            value=format_value(value, deep_indent_size, deep_indent)
             ))
-    result = chain('{', acc, [deep_ind +'}'])       
+    result = chain('{', acc, [current_indent +'}'])
     return '\n'.join(result)
 
 
-def format_(diff, depth=2, order=sort_):
+def format_(diff, depth = 0, order=sort_):
     result = []
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
@@ -43,23 +56,25 @@ def format_(diff, depth=2, order=sort_):
         'kept': ' ',
         'nested': ' ',
     }
-    
-    deep_ind = ' ' * depth
-    for key, state in sort_(diff):
+    replacer = ' '
+    deep_indent_size = depth + 2
+    deep_indent = replacer * deep_indent_size
+    current_indent = replacer * depth
+    for key, state in order(diff):
         value = diff.get((key, state))
         if state == 'nested':
-            value = format_(value, depth=depth+2)
-        
+            deep_indent_size = depth + 4
+            value = format_(value, depth=deep_indent_size)
+            
         result.append(view(
-            ind=' ' * depth,
+            ind=deep_indent,
             sign=signs.get(state),
             key=key,
-            value=jsonify(value, depth + 2),
+            value=format_value(value, deep_indent_size, deep_indent),
         ))
-    result = chain('{', result, [deep_ind +'}'])   
+    result = chain('{', result, [current_indent +'}'])
     
     return '\n'.join(result)
-
 
 
 #def format_(diff, spaces_count=1, order=_sort):
