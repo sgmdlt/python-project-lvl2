@@ -2,22 +2,24 @@ from gendiff.formaters.stylish import format_
 from gendiff.parsers import parse_files
 
 
-def get_diff(old, new):
+def get_diff(old, new):  # noqa: WPS210
     diff = {}
     removed = old.keys() - new.keys()
     added = new.keys() - old.keys()
     kept = new.keys() & old.keys()
 
     for k_key in kept:
-        if isinstance(old[k_key], dict) and isinstance(new[k_key], dict):
-            diff[(k_key, 'nested')] = get_diff(old[k_key], new[k_key])
-        
-        elif old[k_key] == new[k_key]:
-            diff[(k_key, 'kept')] = old[k_key]
-        
+        old_k_value = old[k_key]
+        new_k_value = new[k_key]
+        if isinstance(old_k_value, dict) and isinstance(new_k_value, dict):
+            diff[(k_key, 'nested')] = get_diff(old_k_value, new_k_value)
+
+        elif old_k_value == new_k_value:
+            diff[(k_key, 'kept')] = old_k_value
+
         else:
-            diff[(k_key, 'removed')] = old[k_key]
-            diff[(k_key, 'added')] = new[k_key]
+            diff[(k_key, 'removed')] = old_k_value
+            diff[(k_key, 'added')] = new_k_value
 
     for r_key in removed:
         diff[(r_key, 'removed')] = old[r_key]
