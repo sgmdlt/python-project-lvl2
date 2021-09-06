@@ -31,20 +31,21 @@ def yamls():
 def jsons_nested():
     file1 = PATH + '/nested/file1.json'
     file2 = PATH + '/nested/file2.json'
-    yield (file1, file2)
+    expected = PATH + '/nested/jsondiff.txt'
+    yield (file1, file2, expected)
 
 
-def test_diff_jsons(jsons):
+def test_plain_jsons(jsons):
     first, second = jsons
     assert generate_diff(first, second) == RESULT
 
 
-def test_diff_yamls(yamls):
+def test_plain_yamls(yamls):
     first, second = yamls
     assert generate_diff(first, second) == RESULT
 
 
 def test_nested_json(jsons_nested):
-    first, second = jsons_nested
+    first, second, expected = jsons_nested
     print(generate_diff(first, second))
-    assert generate_diff(first, second) == expected
+    assert generate_diff(first, second) == open(expected, 'r').read()
