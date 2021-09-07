@@ -17,3 +17,8 @@ As you can see, it's pretty straightforward
 YAML files as well
 
 [![asciicast](https://asciinema.org/a/0ERCriSgbfXuBD0AQwEp4xoj5.svg)](https://asciinema.org/a/0ERCriSgbfXuBD0AQwEp4xoj5)
+
+---
+What about nested files?
+
+[![asciicast](https://asciinema.org/a/Yl5lbYWFGVcUS6JSQovNRX4nL.svg)](https://asciinema.org/a/Yl5lbYWFGVcUS6JSQovNRX4nL)
