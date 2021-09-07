@@ -1,8 +1,9 @@
 import pytest
+import os
 from gendiff.generate_diff import generate_diff
 
 
-RESULT = '''{
+PLAIN_EXPECTED = '''{
   - follow: false
     host: hexlet.io
   - proxy: 123.234.53.22
@@ -11,41 +12,61 @@ RESULT = '''{
   + verbose: true
 }'''
 
-PATH = 'tests/fixtures/'
+
+def get_fixture_path(file_name, directory=''):
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(current_dir, 'fixtures', directory, file_name)
+
 
 @pytest.fixture
-def jsons():
-    file1 = PATH + 'file1.json'
-    file2 = PATH + 'file2.json'
+def plain_jsons():
+    file1 = get_fixture_path('file1.json')
+    file2 = get_fixture_path('file2.json')
     yield (file1, file2)
 
 
 @pytest.fixture
-def yamls():
-    file1 = PATH + 'file1.yaml'
-    file2 = PATH + 'file2.yml'
+def plain_yamls():
+    file1 = get_fixture_path('file1.yaml')
+    file2 = get_fixture_path('file2.yml')
     yield (file1, file2)
 
 
 @pytest.fixture
-def jsons_nested():
-    file1 = PATH + '/nested/file1.json'
-    file2 = PATH + '/nested/file2.json'
-    expected = PATH + '/nested/jsondiff.txt'
-    yield (file1, file2, expected)
+def nested_jsons():
+    file1 = get_fixture_path('file1.json', 'nested')
+    file2 = get_fixture_path('file2.json', 'nested')
+    yield (file1, file2)
 
 
-def test_plain_jsons(jsons):
-    first, second = jsons
-    assert generate_diff(first, second) == RESULT
+@pytest.fixture
+def nested_yamls():
+    file1 = get_fixture_path('file1.yaml', 'nested')
+    file2 = get_fixture_path('file2.yml', 'nested')
+    yield (file1, file2)
 
 
-def test_plain_yamls(yamls):
-    first, second = yamls
-    assert generate_diff(first, second) == RESULT
+@pytest.fixture
+def expected():
+    stylish = open(get_fixture_path('stylish_diff.txt', 'nested'), 'r').read()
+    yield stylish
 
 
-def test_nested_json(jsons_nested):
-    first, second, expected = jsons_nested
-    print(generate_diff(first, second))
-    assert generate_diff(first, second) == open(expected, 'r').read()
+def test_plain_jsons(plain_jsons):
+    first, second = plain_jsons
+    assert generate_diff(first, second) == PLAIN_EXPECTED
+
+
+def test_plain_yamls(plain_yamls):
+    first, second = plain_yamls
+    assert generate_diff(first, second) == PLAIN_EXPECTED
+
+
+def test_nested_json(nested_jsons, expected):
+    first, second = nested_jsons
+    assert generate_diff(first, second) == expected
+
+
+def test_nested_yamls(nested_yamls, expected):
+    first, second = nested_yamls
+    assert generate_diff(first, second) == expected 
