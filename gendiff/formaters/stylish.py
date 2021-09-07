@@ -48,7 +48,7 @@ def format_value(tree, spaces_count=2):
     return _walk(tree, spaces_count)
 
 
-def format_(tree, spaces_count=2, order=sort_diff):
+def format_stylish(tree, spaces_count=2, order=sort_diff):
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
         'removed': '-',
@@ -68,7 +68,7 @@ def format_(tree, spaces_count=2, order=sort_diff):
             value = node.get((key, state))
 
             if state == 'nested':
-                value = format_(value, count + step)
+                value = format_stylish(value, count + step)
 
             line.append(view(
                 ind=replacer * count,
