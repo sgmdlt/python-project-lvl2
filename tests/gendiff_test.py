@@ -1,6 +1,8 @@
+from _pytest.mark import param
 import pytest
 import os
 from gendiff.generate_diff import generate_diff
+from gendiff.formaters.plain import plain
 
 
 PLAIN_EXPECTED = '''{
@@ -47,9 +49,13 @@ def nested_yamls():
 
 
 @pytest.fixture
-def expected():
-    stylish = open(get_fixture_path('stylish_diff.txt', 'nested'), 'r').read()
-    yield stylish
+def stylish_output():
+    yield open(get_fixture_path('stylish_diff.txt', 'nested'), 'r').read()
+
+
+@pytest.fixture
+def plain_output():
+    yield open(get_fixture_path('plain_diff.txt', 'nested'), 'r').read()
 
 
 def test_plain_jsons(plain_jsons):
@@ -62,11 +68,15 @@ def test_plain_yamls(plain_yamls):
     assert generate_diff(first, second) == PLAIN_EXPECTED
 
 
-def test_nested_json(nested_jsons, expected):
-    first, second = nested_jsons
-    assert generate_diff(first, second) == expected
+def test_stylish_formater(nested_jsons, nested_yamls, stylish_output):
+    first_json, second_json = nested_jsons
+    first_yaml, second_yaml = nested_yamls
+    assert generate_diff(first_json, second_json) == stylish_output
+    assert generate_diff(first_yaml, second_yaml) == stylish_output
+    
 
-
-def test_nested_yamls(nested_yamls, expected):
-    first, second = nested_yamls
-    assert generate_diff(first, second) == expected 
+def test_plain_formater(nested_jsons, nested_yamls, plain_output):
+    first_json, second_json = nested_jsons
+    first_yaml, second_yaml = nested_yamls
+    assert generate_diff(first_json, second_json, formater=plain) == plain_output
+    assert generate_diff(first_yaml, second_yaml, formater=plain) == plain_output
