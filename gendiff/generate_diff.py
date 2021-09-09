@@ -15,11 +15,13 @@ def get_diff(old, new):  # noqa: WPS210
             diff[(k_key, 'nested')] = get_diff(old_k_value, new_k_value)
 
         elif old_k_value == new_k_value:
-            diff[(k_key, 'kept')] = old_k_value
+            diff[(k_key, 'unchanged')] = old_k_value
 
         else:
-            diff[(k_key, 'removed')] = old_k_value
-            diff[(k_key, 'added')] = new_k_value
+            diff[(k_key, 'changed')] = {
+                'old_value': old_k_value,
+                'new_value': new_k_value,
+            }
 
     for r_key in removed:
         diff[(r_key, 'removed')] = old[r_key]
