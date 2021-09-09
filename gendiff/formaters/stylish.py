@@ -5,8 +5,9 @@ def sort_diff(diff):
     order = {
         'removed': 1,
         'added': 2,
-        'kept': 3,
-        'nested': 4,
+        'changed': 3,
+        'unchanged': 4,
+        'nested': 5,
     }
     sorted_diff = {}
     sort_states = sorted(diff, key=lambda pair: order.get(pair[1]))
@@ -24,6 +25,23 @@ def jsonify(value):
     elif value is False:
         return 'false'
     return str(value)
+
+
+def make_line(key, value, state, indent):
+    view = '{ind}{sign} {key}: {value}'.format
+    signs = {
+        'removed': '-',
+        'added': '+',
+        'unchanged': ' ',
+        'nested': ' ',
+    }
+    replacer = ' '
+    return view(
+        ind=replacer * indent,
+        sign=signs.get(state),
+        key=key,
+        value=value,
+    )
 
 
 def format_value(tree, spaces_count=2):
@@ -49,20 +67,12 @@ def format_value(tree, spaces_count=2):
 
 
 def format_stylish(tree, spaces_count=2, order=sort_diff):
-    view = '{ind}{sign} {key}: {value}'.format
-    signs = {
-        'removed': '-',
-        'added': '+',
-        'kept': ' ',
-        'nested': ' ',
-    }
     step = 4
     inner_step = step // 2
     replacer = ' '
 
     def _walk(node, count):
-
-        line = []
+        lines = []
 
         for key, state in order(node):
             value = node.get((key, state))
@@ -70,12 +80,16 @@ def format_stylish(tree, spaces_count=2, order=sort_diff):
             if state == 'nested':
                 value = format_stylish(value, count + step)
 
-            line.append(view(
-                ind=replacer * count,
-                sign=signs.get(state),
-                key=key,
-                value=format_value(value, count + inner_step),
-            ))
-        result = chain('{', line, [(count - inner_step) * replacer + '}'])
+            if state == 'changed':
+                old_value = format_value(value['old_value'], count + inner_step)
+                lines.append(make_line(key, old_value, 'removed', count))
+                new_value = format_value(value['new_value'], count + inner_step)
+                lines.append(make_line(key, new_value, 'added', count))
+                continue
+
+            value = format_value(value, count + inner_step)
+            lines.append(make_line(key, value, state, count))
+
+        result = chain('{', lines, [(count - inner_step) * replacer + '}'])
         return '\n'.join(result)
     return _walk(tree, spaces_count)
