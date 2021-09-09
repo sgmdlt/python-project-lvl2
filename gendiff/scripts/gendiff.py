@@ -10,8 +10,8 @@ def main():
         prog='gendiff',
         description='Generate diff',
     )
-    parser.add_argument('first_file')
-    parser.add_argument('second_file')
+    parser.add_argument('first_file', help='path to first file')
+    parser.add_argument('second_file', help='path to second file')
     parser.add_argument(
         '-f',
         '--format',
