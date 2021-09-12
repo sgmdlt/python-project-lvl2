@@ -1,9 +1,6 @@
-from _pytest.mark import param
 import pytest
 import os
 from gendiff.generate_diff import generate_diff
-from gendiff.formaters.plain import plain
-
 
 PLAIN_EXPECTED = '''{
   - follow: false
@@ -78,5 +75,5 @@ def test_stylish_formater(nested_jsons, nested_yamls, stylish_output):
 def test_plain_formater(nested_jsons, nested_yamls, plain_output):
     first_json, second_json = nested_jsons
     first_yaml, second_yaml = nested_yamls
-    assert generate_diff(first_json, second_json, formater=plain) == plain_output
-    assert generate_diff(first_yaml, second_yaml, formater=plain) == plain_output
+    assert generate_diff(first_json, second_json, style='plain') == plain_output
+    assert generate_diff(first_yaml, second_yaml, style='plain') == plain_output
