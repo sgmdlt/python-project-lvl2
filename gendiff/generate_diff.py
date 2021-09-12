@@ -1,5 +1,13 @@
-from gendiff.formaters.stylish import format_stylish
+from gendiff.formaters.plain import plain
+from gendiff.formaters.stylish import stylish
 from gendiff.parsers import parse_files
+
+FORMATERS = {  # noqa: WPS407
+    'stylish': stylish,
+    'plain': plain,
+}
+
+DEFAULT_STYLE = 'stylish'
 
 
 def get_diff(old, new):  # noqa: WPS210
@@ -31,6 +39,8 @@ def get_diff(old, new):  # noqa: WPS210
     return diff  # { (key, state): value }
 
 
-def generate_diff(first_file, second_file, formater=format_stylish):
+def generate_diff(first_file, second_file, style=DEFAULT_STYLE):
     first, second = parse_files(first_file, second_file)
-    return formater(get_diff(first, second))
+    diff = get_diff(first, second)
+    style = FORMATERS.get(style)
+    return style(diff)
