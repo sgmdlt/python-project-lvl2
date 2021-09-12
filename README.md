@@ -22,3 +22,8 @@ YAML files as well
 What about nested files?
 
 [![asciicast](https://asciinema.org/a/Yl5lbYWFGVcUS6JSQovNRX4nL.svg)](https://asciinema.org/a/Yl5lbYWFGVcUS6JSQovNRX4nL)
+
+---
+"Plain style" output
+
+[![asciicast](https://asciinema.org/a/yORDhCLBgLrePB5VxH5NcAenV.svg)](https://asciinema.org/a/yORDhCLBgLrePB5VxH5NcAenV)
