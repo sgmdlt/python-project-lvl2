@@ -66,7 +66,7 @@ def format_value(tree, spaces_count=2):
     return _walk(tree, spaces_count)
 
 
-def format_stylish(tree, spaces_count=2, order=sort_diff):
+def stylish(tree, spaces_count=2, order=sort_diff):
     step = 4
     inner_step = step // 2
     replacer = ' '
@@ -78,7 +78,7 @@ def format_stylish(tree, spaces_count=2, order=sort_diff):
             value = node.get((key, state))
 
             if state == 'nested':
-                value = format_stylish(value, count + step)
+                value = stylish(value, count + step)
 
             if state == 'changed':
                 old_value = format_value(value['old_value'], count + inner_step)
