@@ -4,12 +4,11 @@ from gendiff.differ import CHANGED, NESTED, NEW_VALUE, OLD_VALUE, STATE, VALUE
 def format_value(value):
     if isinstance(value, dict):
         return '[complex value]'
-    translation = {
-        None: 'null',
-        False: 'false',
-        True: 'true',
-    }
-    return translation.get(value, "'{0}'".format(value))
+    if isinstance(value, bool):
+        return str(value).lower()
+    if value is None:
+        return 'null'
+    return "'{0}'".format(value)
 
 
 def make_line(state, path, old=None, new=None, value=None):
