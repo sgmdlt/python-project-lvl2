@@ -70,7 +70,7 @@ def test_stylish_formater(nested_jsons, nested_yamls, stylish_output):
     first_yaml, second_yaml = nested_yamls
     assert generate_diff(first_json, second_json) == stylish_output
     assert generate_diff(first_yaml, second_yaml) == stylish_output
-    
+
 
 def test_plain_formater(nested_jsons, nested_yamls, plain_output):
     first_json, second_json = nested_jsons
