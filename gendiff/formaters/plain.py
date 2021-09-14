@@ -6,9 +6,11 @@ def format_value(value):
         return '[complex value]'
     if isinstance(value, bool):
         return str(value).lower()
+    if isinstance(value, str):
+        return "'{0}'".format(value)
     if value is None:
         return 'null'
-    return "'{0}'".format(value)
+    return '{0}'.format(value)
 
 
 def make_line(state, path, old=None, new=None, value=None):
