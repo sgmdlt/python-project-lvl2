@@ -1,20 +1,16 @@
 from itertools import chain
 
-
-def sort_diff(diff):
-    order = {
-        'removed': 1,
-        'added': 2,
-        'changed': 3,
-        'unchanged': 4,
-        'nested': 5,
-    }
-    sorted_diff = {}
-    sort_states = sorted(diff, key=lambda pair: order.get(pair[1]))
-    sort_names = sorted(sort_states, key=lambda pair: pair[0])
-    for key in sort_names:
-        sorted_diff[key] = diff[key]
-    return sorted_diff
+from gendiff.differ import (
+    ADDED,
+    CHANGED,
+    NESTED,
+    NEW_VALUE,
+    OLD_VALUE,
+    REMOVED,
+    STATE,
+    UNCHAGED,
+    VALUE,
+)
 
 
 def jsonify(value):
@@ -30,10 +26,10 @@ def jsonify(value):
 def make_line(key, value, state, indent):
     view = '{ind}{sign} {key}: {value}'.format
     signs = {
-        'removed': '-',
-        'added': '+',
-        'unchanged': ' ',
-        'nested': ' ',
+        REMOVED: '-',
+        ADDED: '+',
+        UNCHAGED: ' ',
+        NESTED: ' ',
     }
     replacer = ' '
     return view(
@@ -66,7 +62,7 @@ def format_value(tree, spaces_count=2):
     return _walk(tree, spaces_count)
 
 
-def stylish(tree, spaces_count=2, order=sort_diff):
+def stylish_format(tree, spaces_count=2):
     step = 4
     inner_step = step // 2
     replacer = ' '
@@ -74,21 +70,23 @@ def stylish(tree, spaces_count=2, order=sort_diff):
     def _walk(node, count):
         lines = []
 
-        for key, state in order(node):
-            value = node.get((key, state))
+        for key in sorted(node):
+            data = node[key]
+            state = data[STATE]
+            value = data.get(VALUE)
 
-            if state == 'nested':
-                value = stylish(value, count + step)
+            if state == NESTED:
+                value = stylish_format(value, count + step)
 
-            if state == 'changed':
-                old_value = format_value(value['old_value'], count + inner_step)
-                lines.append(make_line(key, old_value, 'removed', count))
-                new_value = format_value(value['new_value'], count + inner_step)
-                lines.append(make_line(key, new_value, 'added', count))
+            if state == CHANGED:
+                old_value = format_value(data[OLD_VALUE], count + inner_step)
+                lines.append(make_line(key, old_value, REMOVED, count))
+                new_value = format_value(data[NEW_VALUE], count + inner_step)
+                lines.append(make_line(key, new_value, ADDED, count))
                 continue
 
-            value = format_value(value, count + inner_step)
-            lines.append(make_line(key, value, state, count))
+            f_value = format_value(value, count + inner_step)
+            lines.append(make_line(key, f_value, state, count))
 
         result = chain('{', lines, [(count - inner_step) * replacer + '}'])
         return '\n'.join(result)

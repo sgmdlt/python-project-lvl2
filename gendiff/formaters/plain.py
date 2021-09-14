@@ -1,3 +1,6 @@
+from gendiff.differ import CHANGED, NESTED, NEW_VALUE, OLD_VALUE, STATE, VALUE
+
+
 def format_value(value):
     if isinstance(value, dict):
         return '[complex value]'
@@ -22,24 +25,26 @@ def make_line(state, path, old=None, new=None, value=None):
     return line
 
 
-def plain(diff, path=None):
+def plain_format(diff, path=None):
     if path is None:
         path = []
-
     result = []
-    for key, state in sorted(diff):
+    for key in sorted(diff):
         path.append(key)
-        if state == 'nested':
-            result.append(plain(diff.get((key, state)), path))
+        data = diff[key]
+        state = data[STATE]
 
-        value = diff.get((key, state))
-        if state == 'changed':
-            old_value = format_value(value['old_value'])
-            new_value = format_value(value['new_value'])
+        if state == NESTED:
+            result.append(plain_format(data[VALUE], path))
+
+        if state == CHANGED:
+            old_value = format_value(data[OLD_VALUE])
+            new_value = format_value(data[NEW_VALUE])
             line = make_line(state, path, old_value, new_value)
         else:
-            value = format_value(value)
+            value = format_value(data[VALUE])
             line = make_line(state, path, value=value)
+
         path.pop()
         result.append(line)
     return '\n'.join(line for line in result if line)
