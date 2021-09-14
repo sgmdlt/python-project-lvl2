@@ -24,6 +24,11 @@ What about nested files?
 [![asciicast](https://asciinema.org/a/Yl5lbYWFGVcUS6JSQovNRX4nL.svg)](https://asciinema.org/a/Yl5lbYWFGVcUS6JSQovNRX4nL)
 
 ---
-"Plain style" output
+'Plain style' output
 
 [![asciicast](https://asciinema.org/a/yORDhCLBgLrePB5VxH5NcAenV.svg)](https://asciinema.org/a/yORDhCLBgLrePB5VxH5NcAenV)
+
+---
+'JSON style' output
+
+[![asciicast](https://asciinema.org/a/OpqfH7kf1hwAwauXwpVA1bET2.svg)](https://asciinema.org/a/OpqfH7kf1hwAwauXwpVA1bET2)
