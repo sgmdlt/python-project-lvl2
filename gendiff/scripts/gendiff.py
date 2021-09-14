@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import argparse
 
-from gendiff.generate_diff import DEFAULT_STYLE, FORMATERS, generate_diff
+from gendiff.formaters.formaters import DEFAULT_STYLE, FORMATERS
+from gendiff.generate_diff import generate_diff
 
 
 def main():
