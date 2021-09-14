@@ -15,7 +15,7 @@ def main():
         '-f',
         '--format',
         help='set format of output (default: {0})'.format(DEFAULT_STYLE),
-        choices=list(FORMATERS),
+        choices=FORMATERS,
         default=DEFAULT_STYLE,
     )
     args = parser.parse_args()
