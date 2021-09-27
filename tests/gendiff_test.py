@@ -77,3 +77,8 @@ def test_plain_formater(nested_jsons, nested_yamls, plain_output):
     first_yaml, second_yaml = nested_yamls
     assert generate_diff(first_json, second_json, style='plain') == plain_output
     assert generate_diff(first_yaml, second_yaml, style='plain') == plain_output
+
+
+def test_wrong_file_format():
+    with pytest.raises(RuntimeError, match=r'format'):
+        generate_diff(get_fixture_path('file1.doc'), get_fixture_path('file2.json'))
