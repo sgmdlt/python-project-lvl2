@@ -30,7 +30,7 @@ def get_fixture_path(file_name, directory=''):
 
 
 @pytest.mark.parametrize(
-    "first_file, second_file, dir, style, output", 
+    "first_file, second_file, dir, style, output",
     PLAIN_FILES.values(),
     ids=PLAIN_FILES.keys(),
 )
@@ -41,8 +41,8 @@ def test_plain_files(first_file, second_file, dir, style, output):
 
 
 @pytest.mark.parametrize(
-    "first_file, second_file, dir, style, output", 
-    NESTED_FILES.values(), 
+    "first_file, second_file, dir, style, output",
+    NESTED_FILES.values(),
     ids=NESTED_FILES.keys(),
 )
 def test_nested_files(first_file, second_file, dir, style, output):
