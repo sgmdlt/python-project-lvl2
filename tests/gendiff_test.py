@@ -48,7 +48,8 @@ def test_plain_files(first_file, second_file, dir, style, output):
 def test_nested_files(first_file, second_file, dir, style, output):
     file1 = get_fixture_path(first_file, dir)
     file2 = get_fixture_path(second_file, dir)
-    output_file = open(get_fixture_path(output, dir), 'r').read()
+    with open(get_fixture_path(output, dir), 'r') as o:
+        output_file = o.read()
     assert generate_diff(file1, file2, style) == output_file
 
 
