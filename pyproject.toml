@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hexlet-code"
-version = "1.6"
+version = "1.7"
 description = "CLI and library diff utilite"
 authors = ["Your Name <you@example.com>"]
 packages = [
