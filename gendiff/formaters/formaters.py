@@ -12,5 +12,5 @@ DEFAULT_STYLE = 'stylish'
 
 
 def format_output(diff, style=DEFAULT_STYLE):
-    style = FORMATERS.get(style)
+    style = FORMATERS.get(style) or FORMATERS.get(DEFAULT_STYLE)
     return style(diff)
