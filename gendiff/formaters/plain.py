@@ -1,7 +1,7 @@
 from gendiff.differ import CHANGED, NESTED, NEW_VALUE, OLD_VALUE, STATE, VALUE
 
 
-def format_value(value):
+def to_str(value):
     if isinstance(value, dict):
         return '[complex value]'
     if isinstance(value, bool):
@@ -39,11 +39,11 @@ def plain_format(diff, path=None):
             result.append(plain_format(data[VALUE], path))
 
         if state == CHANGED:
-            old_value = format_value(data[OLD_VALUE])
-            new_value = format_value(data[NEW_VALUE])
+            old_value = to_str(data[OLD_VALUE])
+            new_value = to_str(data[NEW_VALUE])
             line = make_line(state, path, old_value, new_value)
         else:
-            value = format_value(data[VALUE])
+            value = to_str(data[VALUE])
             line = make_line(state, path, value=value)
 
         path.pop()

@@ -8,9 +8,9 @@ FORMATERS = {  # noqa: WPS407
     'json': json_format,
 }
 
-DEFAULT_STYLE = 'stylish'
+DEFAULT_FORMAT = 'stylish'
 
 
-def format_output(diff, style=DEFAULT_STYLE):
-    style = FORMATERS.get(style) or FORMATERS.get(DEFAULT_STYLE)
+def format_output(diff, style=DEFAULT_FORMAT):
+    style = FORMATERS.get(style) or FORMATERS.get(DEFAULT_FORMAT)
     return style(diff)

@@ -13,7 +13,7 @@ from gendiff.differ import (
 )
 
 
-def jsonify(value):
+def to_str(value):
     if value is None:
         return 'null'
     elif value is True:
@@ -46,7 +46,7 @@ def format_value(tree, spaces_count=2):
 
     def _walk(node, count):
         if not isinstance(node, dict):
-            return jsonify(node)
+            return to_str(node)
 
         line = []
         replacer = ' '
