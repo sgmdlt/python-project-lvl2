@@ -1,10 +1,10 @@
 from gendiff.differ import get_diff
-from gendiff.formaters.formaters import DEFAULT_STYLE, format_output
+from gendiff.formaters.formaters import DEFAULT_FORMAT, format_output
+from gendiff.io import get_file
 from gendiff.parsers import parse_data
-from gendiff.reader import get_file
 
 
-def generate_diff(first_path, second_path, style=DEFAULT_STYLE):
+def generate_diff(first_path, second_path, style=DEFAULT_FORMAT):
     first_data, first_format = get_file(first_path)
     second_data, second_format = get_file(second_path)
     diff = get_diff(

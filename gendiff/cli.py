@@ -1,9 +1,9 @@
 import argparse
 
-from gendiff.formaters.formaters import DEFAULT_STYLE, FORMATERS
+from gendiff.formaters.formaters import DEFAULT_FORMAT, FORMATERS
 
 
-def get_cli_args():
+def get_args():
     parser = argparse.ArgumentParser(
         prog='gendiff',
         description='Generate diff',
@@ -13,9 +13,9 @@ def get_cli_args():
     parser.add_argument(
         '-f',
         '--format',
-        help='set format of output (default: {0})'.format(DEFAULT_STYLE),
+        help='set format of output (default: {0})'.format(DEFAULT_FORMAT),
         choices=FORMATERS,
-        default=DEFAULT_STYLE,
+        default=DEFAULT_FORMAT,
     )
     args = parser.parse_args()
     return args.first_file, args.second_file, args.format
