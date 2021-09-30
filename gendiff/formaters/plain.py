@@ -26,7 +26,7 @@ def make_line(state, path, old=None, new=None, value=None):
     return line
 
 
-def plain_format(diff, path=None):
+def to_format(diff, path=None):
     if path is None:
         path = []
     result = []
@@ -36,7 +36,7 @@ def plain_format(diff, path=None):
         state = data[STATE]
 
         if state == NESTED:
-            result.append(plain_format(data[VALUE], path))
+            result.append(to_format(data[VALUE], path))
 
         if state == CHANGED:
             old_value = to_str(data[OLD_VALUE])

@@ -1,6 +1,6 @@
 from gendiff.formaters.json import json_format
-from gendiff.formaters.plain import plain_format
-from gendiff.formaters.stylish import stylish_format
+from gendiff.formaters.plain import to_format as plain_format
+from gendiff.formaters.stylish import to_format as stylish_format
 
 FORMATERS = {  # noqa: WPS407
     'stylish': stylish_format,
