@@ -8,9 +8,11 @@ FORMATERS = {  # noqa: WPS407
     'json': json_format,
 }
 
-DEFAULT_FORMAT = 'stylish'
 
-
-def format_output(diff, style=DEFAULT_FORMAT):
-    style = FORMATERS.get(style) or FORMATERS.get(DEFAULT_FORMAT)
+def format_output(diff, style):
+    message = 'Wrong output format: {f}. Supported formats: {sup}'.format  # noqa: E501
+    try:
+        style = FORMATERS[style]
+    except KeyError:
+        raise RuntimeError(message(f=style, sup=FORMATERS))
     return style(diff)
