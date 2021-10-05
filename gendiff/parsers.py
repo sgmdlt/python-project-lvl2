@@ -9,6 +9,6 @@ PARSERS = {  # noqa: WPS407
 }
 
 
-def parse_data(data, extension):
-    parser = PARSERS.get(extension)
+def parse_data(data, data_format):
+    parser = PARSERS.get(data_format)
     return parser(data)
