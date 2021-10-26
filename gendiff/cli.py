@@ -1,6 +1,7 @@
 import argparse
 
-from gendiff.formaters.formaters import DEFAULT_FORMAT, FORMATERS
+from gendiff.formaters.formaters import FORMATERS
+from gendiff.generate_diff import DEFAULT_FORMAT
 
 
 def get_args():
