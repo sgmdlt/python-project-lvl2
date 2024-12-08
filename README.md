@@ -8,9 +8,9 @@
 
 ### a simple utility for comparing two files
 
-- Supports input formats as JSON and YAML
-- Output in three formats: plain, tree-like and JSON
-- Use as CLI utility or library
+* Supports input formats as JSON and YAML
+* Output in three formats: plain, tree-like and JSON
+* Use as CLI utility or library
 
 ## Installation
 
